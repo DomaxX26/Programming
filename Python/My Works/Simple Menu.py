@@ -18,7 +18,13 @@ def mostrarMenu():
 
 
 def numeroMayor():
-        numVeces = int(input("Cuantos numeros quieres introducir"))
+        numVeces = int(input("Cuantos numeros quieres introducir: "))
+
+        for x in range(numVeces):
+                print(x)
+                #num = int(input(int(x) + "numero a introducir: ")) 
+        
+        
         
 #def numeroMenor():
 
@@ -30,13 +36,10 @@ def numeroMayor():
 
 while True:
         mostrarMenu()
-        indice = int(input("Introduce un número del (1-4)"))
+        indice = int(input("Introduce un número del (1-4): "))
         
         if indice == 1:
                 numeroMayor()
-        elif indice == 2:
-                #numeroMenor()
-        elif indice == 3:
-                #numeroMedia()
+        
         else:
                 exit()
