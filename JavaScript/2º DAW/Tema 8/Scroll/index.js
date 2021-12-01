@@ -2,41 +2,49 @@
 let arrPoke = new Array;
 window.onload = main;
 
+let element = 10;
+let pagina = 0;
+var scroll = 0;
+
 function main  (){
-  console.log("Conttol Scrool",document.body.scrollHeight - window.innerHeight,  window.scrollY)
+  document.addEventListener("scroll", ()=>{
+    console.log("Conttol Scrool",document.body.scrollHeight - window.innerHeight, window.scrollY);
+    
+    scroll = document.body.scrollHeight - window.innerHeight - 500;
+    console.log(scroll)
+    if(window.scrollY > (document.body.scrollHeight - window.innerHeight) - 500){
+      cargarLista();
+    }
+  });
+
 // cridar al api 
 fetch('https://pokeapi.co/api/v2/pokemon?limit=1100&offset=0')
   .then(response => response.json())
   .then(data =>{
-     arrPoke = data.results;
-  let observardor = new IntersectionObserver((entrada) =>{
-
-  }, {
-    threshold: 1.0
-  });     
-     cargarLista();
+    arrPoke = data.results;    
+    cargarLista();
   });
-
-
 }
 
 function cargarLista (){
 // recorrer Array
-for(let i=0;i<10; i++){
+for(var i=pagina;i<element; i++){
   cargarPagina(arrPoke[i],i);
 };
-
+pagina = element;
+element += element;
+scroll = document.body.scrollHeight - window.innerHeight - 500;
 }
 
 
 function cargarPagina (element, ind){
 
     fetch(element.url)
-     .then(response => response.json())
-     .then(data =>{
-         //console.log(data);
+    .then(response => response.json())
+    .then(data =>{
+        
       // Afegir dades
-      document.getElementById("listado").innerHTML += '<div class="card mb-4">' +
+      document.getElementById("listado").innerHTML += '<div id="card'+ind+'" class="card mb-4">' +
       '<a href="#!"><img class="card-img-top" src="'+  data.sprites.front_default + '" alt="..." /></a>' +
       '<div class="card-body">' +
           '<h2 class="card-title">' + data.name +'</h2>' +
@@ -46,15 +54,6 @@ function cargarPagina (element, ind){
           '</div>'+
       '</div>' +
   '</div>';
-
-
-  });
-
-  const pokemonsEnPantalla = document.querySelectorAll('.card .mb-4');
-  console.log(pokemonsEnPantalla.length);
-  //let ultimPokemon = pokemonsEnPantalla[pokemonsEnPantalla.length - 1];
-  //console.log(ultimPokemon);
-  
-  
+});
 };
 
