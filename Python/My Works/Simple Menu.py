@@ -19,12 +19,17 @@ def mostrarMenu():
 
 def numeroMayor():
         numVeces = int(input("Cuantos numeros quieres introducir: "))
-
+        numeros = []
         for x in range(numVeces):
-                print(x)
-                #num = int(input(int(x) + "numero a introducir: ")) 
+                parseo = str(x+1)
+                num = int(input(" " + parseo+ ". Numero a introducir: ")) 
+                numeros.append(num)
         
-        
+        numeros.sort()
+        lastNumber = numeros[len(numeros) - 1]
+        lastNumberString = str(lastNumber)
+        print("Este és el major número introduït: " + lastNumberString)
+                
         
 #def numeroMenor():
 
@@ -40,6 +45,9 @@ while True:
         
         if indice == 1:
                 numeroMayor()
-        
-        else:
+        #elif indice == 2:
+                #numeroMenor()
+        #elif indice == 3:
+                #numeroMedia()
+        elif indice == 4:
                 exit()
