@@ -1,0 +1,60 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvica Neue", Arial, Helvetica, sans-serif;
+}
+
+/*Header*/
+header, a{
+    background-color:#151617;
+    color: white;
+}
+
+header .col-6{
+    display:flex;
+    padding-top: 0.52%;
+    padding-bottom: 0.5%;
+    align-items: center;
+}
+header .menu{
+    font-size: 13px;
+    justify-content: space-around;
+}
+
+header a{
+    font-weight: bold;
+    padding-top:0.5%;
+    padding-right: 8.8%;
+}
+
+header p{ 
+    padding-left: 1.8%;
+}
+
+header img{
+    margin-top:0.3%;
+    margin-left: 0.2%; 
+    width: 35px;
+}
+
+header a{
+    text-decoration: none; 
+}
+
+/*Main*/
+.banda1{
+    background-image: radial-gradient( 80vw circle at 50% 10%, #3a2099 17%, #480c59 100%);
+}
+
+.banda1 h1, p{
+    text-align: center;
+}
+
+.banda1 .col-12{
+    background-image: url(../img/confeti.svg) ;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 1000px;
+}
+
+/*Footer*/
