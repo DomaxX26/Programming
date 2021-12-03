@@ -12,7 +12,7 @@ header, a{
 
 header .col-6{
     display:flex;
-    padding-top: 0.52%;
+    padding-top: 0.5%;
     padding-bottom: 0.5%;
     align-items: center;
 }
@@ -29,6 +29,7 @@ header a{
 
 header p{ 
     padding-left: 1.8%;
+    margin-top: -1%;
 }
 
 header img{
@@ -48,13 +49,30 @@ header a{
 
 .banda1 h1, p{
     text-align: center;
+    color: white;
+}
+.banda1 h1{
+    font-size: 60px;
+    margin-bottom: 30px;
 }
 
-.banda1 .col-12{
+.banda1 p{
+    font-size: 26px;
+    padding: 0% 15%;
+} 
+
+
+
+.banda1 .titol{
     background-image: url(../img/confeti.svg) ;
+    background-position: 15px 16px;
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 120%;
     height: 1000px;
+    padding-top: 140px;
 }
+
+
+
 
 /*Footer*/
