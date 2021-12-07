@@ -1,132 +1,178 @@
 @font-face {
-    font-family:Source Code Pro;
+    font-family: Source Code Pro;
     src: url(../fonts/Source_Code_Pro/SourceCodePro-Italic-VariableFont_wght.ttf);
 }
 
-*{
+* {
     margin: 0;
     box-sizing: border-box;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvica Neue", Arial, Helvetica, sans-serif;
 }
 
 /*Header*/
-header, a{
-    background-color:#151617;
+header,
+a {
+    background-color: #151617;
     color: white;
 }
 
-header .col-6{
-    display:flex;
+header .col-6 {
+    display: flex;
     padding-top: 0.5%;
     padding-bottom: 0.5%;
     align-items: center;
 }
 
-header .menu{
+header .menu {
     font-size: 13px;
     justify-content: space-around;
 }
 
-header a{
+header a {
     font-weight: bold;
-    padding-top:0.5%;
+    padding-top: 0.5%;
     padding-right: 8.8%;
 }
 
-header p{ 
+header p {
     padding-left: 1.8%;
     margin-top: -1%;
 }
 
-header img{
-    margin-top:0.3%;
-    margin-left: 0.2%; 
+header img {
+    margin-top: 0.3%;
+    margin-left: 0.2%;
     width: 35px;
 }
 
-header a{
-    text-decoration: none; 
+header a {
+    text-decoration: none;
 }
 
 /*Main*/
-.banda1{
-    background-image: radial-gradient( 80vw circle at 50% 10%, #3a2099 17%, #480c59 100%);
-}
-
-.banda1 h1, p{
-    text-align: center;
+.banda1 {
+    background-image: radial-gradient(80vw circle at 50% 10%, #3a2099 17%, #480c59 100%);
     color: white;
 }
-.banda1 h1{
+
+.banda1 h1, p {
+    text-align: center;
+}
+
+.banda1 h1 {
     font-size: 60px;
     margin-bottom: 30px;
 }
 
-.titol p{
+.titol p {
     font-size: 26px;
     padding: 0% 15%;
-} 
+}
 
-.banda1 .titol{
+.banda1 .titol {
     background-image: url(../img/confeti.svg);
     background-position: 15px 16px;
     background-repeat: no-repeat;
     background-size: 120%;
     padding-top: 140px;
 }
-.classe{
+
+.classe {
     margin-bottom: 5%;
 }
-.targeta{
-    color:white;
+
+.targeta {
+    color: white;
     border-radius: 10px;
     width: 45vw;
     padding-left: 3%;
     margin-top: -2%;
     padding-bottom: 6%;
 }
-.plugin{
+
+.plugin {
     background-image: linear-gradient(153deg, #e64c4c 0%, #fb8332 95%);
-    margin-left: 5%;    
+    margin-left: 5%;
 }
 
-.imgTar{
+.imgTar {
     display: flex;
     padding-top: 11%;
     padding-left: 3.8%;
 }
-.imgTar img{
+
+.icones img {
     width: 48px;
     height: 48px;
 }
 
-.assistencia{
+.assistencia {
     background-image: linear-gradient(153deg, #da6bf8 0%, #815eff 95%);
 }
 
-h2{
+h2 {
     font-size: 40px;
     margin-left: 2.5%;
     margin-top: -1%;
 }
-.text{
-    margin-left:12.5%;
+
+.text {
+    margin-left: 12.5%;
     margin-right: 5%;
     line-height: 23.5px;
     font-size: 16px;
 }
 
-.documentacio{
-margin-top: 1.4%;
-margin-left: 12.8%;
-font-size: 14px;
-font-weight: bold;
+.documentacio {
+    margin-top: 1.4%;
+    margin-left: 12.8%;
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.targeta p{
+.targeta p {
     text-align: left;
 }
 
+.formats {
+    margin-top: -5%;
+}
+
+.formats img {
+    margin: auto;
+    display: block;
+    width: 50px;
+    height: 50px;
+}
+
+.formats p {
+    margin-top:-5%;
+    line-height: 23.6px;
+}
+#fitxer {
+    padding-left: 4.6%;
+}
+
+#api {
+    padding-right: 4.6%;
+}
+h3{
+   
+}
+.fletxa{
+    display: flex;
+    border: 1px solid black;
+    font-size: 22px;
+    
+    margin-top: -3%;
+}
+
+.fletxa img{
+    width: 18px;
+    height: 18px;
+    margin-top: 4.6%;
+    margin-left: 2%;
+}
 
 
 /*Footer*/
