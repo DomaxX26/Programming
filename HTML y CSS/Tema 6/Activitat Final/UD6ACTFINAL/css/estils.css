@@ -64,6 +64,7 @@ header a {
     font-size: 60px;
     margin-top: 5px;
     margin-bottom: 37px;
+    font-weight: normal;
 }
 
 .finalBanda1{
@@ -251,6 +252,13 @@ h2 {
     margin-right: 229px;
 }
 
+.tab1{
+    text-indent: 2px;
+}
+
+.tab2{
+    text-indent: 30px;
+}
 /*BANDA 3*/
 /*BANDA 4*/
 /*Footer*/
