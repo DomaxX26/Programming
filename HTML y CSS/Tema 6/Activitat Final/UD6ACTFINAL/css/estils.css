@@ -1,6 +1,6 @@
 @font-face {
     font-family: Source Code Pro;
-    src: url(../fonts/Source_Code_Pro/static/SourceCodePro-ExtraLight.ttf);
+    src: url(../fonts/Source_Code_Pro/static/SourceCodePro-Regular.ttf);
 }
 
 * {
@@ -10,9 +10,11 @@
 }
 
 /*Header*/
-header,
-a {
+header{
     background-color: #151617;
+}
+
+header a , header p{
     color: white;
 }
 
@@ -69,7 +71,7 @@ header a {
 }
 
 .finalBanda1{
-padding-bottom: 2.9%;
+padding-bottom: 2.5%;
 }
 
 .titol p {
@@ -119,20 +121,20 @@ padding-bottom: 2.9%;
     background-image: linear-gradient(153deg, #da6bf8 0%, #815eff 95%);
 }
 
-.assistencia h2{
-    margin-left: 1.5%;
-}
-
 .assistencia p{
     margin-right: -3px;
 }
 
 h2 {
     font-size: 40px;
+    font-weight: normal;
     margin-left: 2.5%;
-    margin-top: -0.5%;
+    margin-top: -0.4%;
 }
 
+.targeta h2{
+    letter-spacing: 1px;
+}
 .text {
     margin-left: 12.5%;
     margin-right: 5%;
@@ -145,6 +147,10 @@ h2 {
     margin-left: 12.8%;
     font-size: 14px;
     font-weight: bold;
+}
+
+.documentacio p{
+    margin-left:-3px;
 }
 
 .targeta p {
@@ -163,7 +169,7 @@ h2 {
 }
 
 .formats p {
-    margin-top:-5%;
+    margin-top:-4%;
     line-height: 25px;
     font-size: 16px;
 }
@@ -246,18 +252,22 @@ h2 {
 .banda2 h3{
     font-weight: normal;
     margin-left: 220px;
-    margin-top:19px;
+    margin-top:20px;
     letter-spacing: 0.5px;
     font-size: 25px;
 }
 
 .maquetem p {
     text-align: left;
-    margin-top:20px;
+    margin-top:18px;
     margin-left: 220px;
     margin-right: 220px;
-    line-height: 27px;
+    line-height: 28px;
     font-size: 16px;
+}
+
+.maquetarWeb p::first-line{
+    word-spacing: 1.5px;
 }
 
 .cursiva{
@@ -271,7 +281,7 @@ ol{
 
 ol img{
     margin-top: 14px;
-    margin-bottom: 10px;
+    margin-bottom: 9px;
 }
 
 li{
@@ -289,13 +299,13 @@ li{
 
 .codic{
     background-color: #f6f7f8;
-    border: 1px solid rgb(175, 175, 175);
+    border: 1px solid rgba(175, 175, 175, 0.2);
     border-radius: 5px;
-    margin-top:10px;
-    margin-top: 10px; 
+    margin-top:9px;
     margin-left:234px;
     margin-right: 234px;
-    padding-bottom: 24px;
+    padding-bottom: 25px;
+    letter-spacing: 0.4px;
 }
 .codic p{
     font-family: Source Code Pro;
@@ -331,10 +341,15 @@ li{
 .publicar p::first-line{
     word-spacing: 4px;
 }
+
 .publicar p{
     word-spacing: 2.2px;
 }
 
+.taronja{
+    color:orange;
+    text-decoration: none;
+}
 /*BANDA 3*/
 /*BANDA 4*/
 /*Footer*/
