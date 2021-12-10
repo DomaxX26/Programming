@@ -1,6 +1,6 @@
 @font-face {
     font-family: Source Code Pro;
-    src: url(../fonts/Source_Code_Pro/static/SourceCodePro-Light.ttf);
+    src: url(../fonts/Source_Code_Pro/static/SourceCodePro-ExtraLight.ttf);
 }
 
 * {
@@ -65,6 +65,7 @@ header a {
     margin-top: 5px;
     margin-bottom: 37px;
     font-weight: normal;
+    letter-spacing: 1.5px;
 }
 
 .finalBanda1{
@@ -120,6 +121,10 @@ padding-bottom: 2.9%;
 
 .assistencia h2{
     margin-left: 1.5%;
+}
+
+.assistencia p{
+    margin-right: -3px;
 }
 
 h2 {
@@ -248,17 +253,88 @@ h2 {
 
 .maquetem p {
     text-align: left;
+    margin-top:20px;
     margin-left: 220px;
-    margin-right: 229px;
+    margin-right: 220px;
+    line-height: 27px;
+    font-size: 16px;
+}
+
+.cursiva{
+    font-style: italic;
+}
+
+ol{
+    margin-top: -25px;
+    margin-left: 220px;
+}
+
+ol img{
+    margin-top: 14px;
+    margin-bottom: 10px;
+}
+
+li{
+    margin-bottom: 8px;
+}
+
+.negre{
+    font-family: Source Code Pro;
+    background-color: rgba(127, 127, 127, 0.7);
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 2px 5px;
+}
+
+.codic{
+    background-color: #f6f7f8;
+    border: 1px solid rgb(175, 175, 175);
+    border-radius: 5px;
+    margin-top:10px;
+    margin-top: 10px; 
+    margin-left:234px;
+    margin-right: 234px;
+    padding-bottom: 24px;
+}
+.codic p{
+    font-family: Source Code Pro;
+    text-align: left;
+    font-size: 15px;
+}
+
+#primer{
+    margin-top:6px;
+    margin-left:4px;
+}
+
+.groc{
+    color: #c59000;
+}
+
+.roig{
+    color: #e64c4c;
 }
 
 .tab1{
-    text-indent: 2px;
+    text-indent: 35px;
 }
 
 .tab2{
-    text-indent: 30px;
+    text-indent: 70px;
 }
+
+#titolh3{
+    margin-top:58px;
+}
+
+.publicar p::first-line{
+    word-spacing: 4px;
+}
+.publicar p{
+    word-spacing: 2.2px;
+}
+
 /*BANDA 3*/
 /*BANDA 4*/
 /*Footer*/
