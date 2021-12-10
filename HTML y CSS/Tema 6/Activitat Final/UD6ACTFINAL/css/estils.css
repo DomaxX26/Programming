@@ -3,10 +3,15 @@
     src: url(../fonts/Source_Code_Pro/static/SourceCodePro-Regular.ttf);
 }
 
+@font-face {
+    font-family: Ubuntu;
+    src: url(../fonts/ubuntu_[allfont.es].ttf);
+}
 * {
     margin: 0;
     box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvica Neue", Arial, Helvetica, sans-serif;
+    font-family: Ubuntu;
+     /*system-ui, -apple-system, BlinkMacSystemFont, "Helvica Neue", Arial, Helvetica, sans-serif;*/
 }
 
 /*Header*/
@@ -71,7 +76,7 @@ header a {
 }
 
 .finalBanda1{
-padding-bottom: 2.5%;
+padding-bottom: 2.8%;
 }
 
 .titol p {
@@ -169,7 +174,7 @@ h2 {
 }
 
 .formats p {
-    margin-top:-4%;
+    margin-top:-5.5%;
     line-height: 25px;
     font-size: 16px;
 }
@@ -242,7 +247,7 @@ h2 {
 }
 
 .banda2 h2{
-    margin-top: 96px;
+    margin-top: 97px;
     margin-left: 2px;
     font-size: 42px;
     font-weight: normal;
@@ -252,7 +257,7 @@ h2 {
 .banda2 h3{
     font-weight: normal;
     margin-left: 220px;
-    margin-top:20px;
+    margin-top:18px;
     letter-spacing: 0.5px;
     font-size: 25px;
 }
@@ -281,7 +286,7 @@ ol{
 
 ol img{
     margin-top: 14px;
-    margin-bottom: 9px;
+    margin-bottom: 8px;
 }
 
 li{
@@ -293,7 +298,6 @@ li{
     background-color: rgba(127, 127, 127, 0.7);
     font-size: 14px;
     border-radius: 5px;
-    font-weight: bold;
     padding: 2px 5px;
 }
 
@@ -350,6 +354,43 @@ li{
     color:orange;
     text-decoration: none;
 }
+.millorar{
+    margin: 34px 235px 80px 235px;
+    border: 1px solid rgba(175, 175, 175, 0.2);
+}
+.millorar p{
+    font-size: 12px;
+    padding-top: 6px;
+    padding-bottom: 8px;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+
 /*BANDA 3*/
+
+.banda3{
+    background-color: black;
+    color: white;
+    padding-bottom: 83px;
+}
+
+.banda3 h2{
+    margin-top: 50px;
+    margin-left: 300px;
+    margin-right: 300px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.banda3 p{
+    margin-top: 6px;
+    margin-left: 182px;
+    margin-right: 182px;
+    letter-spacing: 0.5px;
+    line-height: 32px;
+    font-size: 25px;
+    text-align:center;
+}
+
 /*BANDA 4*/
 /*Footer*/
