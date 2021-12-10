@@ -28,6 +28,11 @@ switch ($voto){
         break;
 }
 
+$insertvoto = $rea . "@" . $bar . "@" . $atl . "@" . $val;
+$fp = fopen($fichero,"w");
+fputs($fp,$insertvoto);
+fclose($fp);
+
 //se calcula el %
 $denominador = (int)$rea + (int)$bar + (int)$atl + (int)$val;
 
