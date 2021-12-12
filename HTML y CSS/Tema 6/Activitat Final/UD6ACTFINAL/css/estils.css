@@ -17,6 +17,7 @@
 /*Header*/
 header{
     background-color: #151617;
+    position: fixed;
 }
 
 header a , header p{
@@ -30,15 +31,20 @@ header .col-6 {
     align-items: center;
 }
 
-header .menu {
+.menu {
     font-size: 13px;
     justify-content: space-around;
+}
+
+.menu a:hover{
+    color: orange;
 }
 
 header a {
     font-weight: bold;
     padding-top: 0.5%;
     padding-right: 8.8%;
+    text-decoration: none;
 }
 
 header p {
@@ -50,10 +56,6 @@ header img {
     margin-top: 0.3%;
     margin-left: 0.2%;
     width: 35px;
-}
-
-header a {
-    text-decoration: none;
 }
 
 /*Main*/
@@ -104,6 +106,11 @@ padding-bottom: 2.8%;
     padding-left: 3%;
     margin-top: -2%;
     padding-bottom: 6%;
+    opacity: 0.5;
+}
+
+.targeta:hover{
+    opacity: 1;
 }
 
 .plugin {
@@ -241,6 +248,10 @@ h2 {
     margin-right: 0;
 }
 
+.opacitat:hover{
+    opacity: 0.5;
+}
+
 /*BANDA 2*/
 .banda2{
     background-color: white;
@@ -353,7 +364,13 @@ li{
 .taronja{
     color:orange;
     text-decoration: none;
+    opacity: 1;
 }
+
+.taronja:hover{
+    opacity: 0.5;
+}
+
 .millorar{
     margin: 34px 235px 80px 235px;
     border: 1px solid rgba(175, 175, 175, 0.2);
@@ -394,8 +411,9 @@ li{
 
 /*BANDA 4*/
 .banda4 h2{
+    text-align: center;
     margin-top: 8.5%;
-    margin-left: 34%;
+    margin-left: -0.1%;
     letter-spacing: 1px;
     font-size: 40px;
 }
@@ -403,5 +421,114 @@ li{
 .icona{
     display: flex;
     justify-content: space-around;
+    
 }
+
+.icona img{
+    margin-top:-12px;
+}
+
+.left img{
+    margin-left: 10px;
+}
+
+.center img{
+    margin-right: 30px;
+}
+
+.right img{
+    margin-right: 70px;
+}
+
+.banda4 .formatCentre h3{
+    margin-left: -30px;
+} 
+
+.banda4 .formatDreta h3{
+    margin-left: -70px;
+}
+
+.banda4 p{
+    margin-top:-14px;
+    margin-left: 10px;
+    line-height: 24px;
+}
+
+.banda4 .textCentre p{
+    margin-top:-17px;
+    margin-left: -30px;
+}
+
+.banda4 .textDreta p{
+    margin-top:-18px;
+    margin-left: -70px;
+}
+
 /*Footer*/
+
+footer p{
+    color: rgb(121, 121, 121);
+    text-align: left;
+    font-size: 12px;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+footer .col-4 {
+    display: flex;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+footer a{
+
+    padding-top: 0.5%;
+    font-weight: bold;
+    color:black;
+    text-decoration: none;
+    margin-top: 24px;
+    letter-spacing: 0.5px;
+}
+
+footer #git{
+margin-left: -91px;
+}
+
+footer #face{
+margin-left: -20px;
+}
+
+footer #tw{
+    margin-left:-20px;
+}
+
+/*Cookies*/
+#cookies{
+    display: flex;
+    position: fixed;
+    align-items: center;
+    border: 1px solid white;
+    background-color: white;
+    border-radius: 40px;
+    z-index: 99999;
+    right: 0px;
+    bottom: 80px;
+    margin:0% 31%;
+    padding: 15px 40px;
+    font-size: 13px;
+}
+
+#cookies p{
+    text-align: left;
+}
+
+#cookies img{
+    width: 15px;
+    opacity: 0.5;
+}
+
+#cookies img:hover{
+    opacity: 1;
+}
