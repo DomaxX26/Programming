@@ -7,17 +7,18 @@
     font-family: Ubuntu;
     src: url(../fonts/ubuntu_[allfont.es].ttf);
 }
+
 * {
     margin: 0;
     box-sizing: border-box;
-    font-family: Ubuntu;
-     /*system-ui, -apple-system, BlinkMacSystemFont, "Helvica Neue", Arial, Helvetica, sans-serif;*/
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvica Neue", Arial, Helvetica, sans-serif;
 }
 
 /*Header*/
 header{
     background-color: #151617;
     position: fixed;
+    z-index: 99999;
 }
 
 header a , header p{
