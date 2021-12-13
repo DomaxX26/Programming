@@ -2,7 +2,7 @@ window.onload = main;
 var totesPoblacions = [];
 function main(){
     document.getElementById("carregar").addEventListener("click", provinciesComunitatValencia);
-    
+    buscadorPoblacions();
 }
 
 function numeroDePoblacions(){
@@ -29,8 +29,7 @@ function carregarPoblacions(codicPostal){
                 totesPoblacions.push(poble);
             });
             
-            numeroDePoblacions();
-            buscadorPoblacions();
+                numeroDePoblacions();
             
         }
     }
