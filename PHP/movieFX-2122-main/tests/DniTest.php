@@ -22,4 +22,14 @@ class DniTest extends TestCase
         $this->expectErrorMessage("Too short");
         $dni = new Dni('01234567');
     }
+
+    public function testShouldContructvalidDniEndingWithT(): void{
+        $dni = new Dni("00000000T");
+        $this->assertEquals("00000000T", (string) $dni);
+    }
+
+    public function testShouldContructvalidDniEndingWithR(): void{
+        $dni = new Dni("00000001R");
+        $this->assertEquals("00000001R", (string) $dni);
+    }
 }
