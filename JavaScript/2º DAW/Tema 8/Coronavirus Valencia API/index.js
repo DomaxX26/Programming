@@ -24,8 +24,12 @@ function carregarApi(){
             //console.log(objecte.dates[fechaActual].countries.Spain.regions[6].sub_regions)
             objecte.dates[fechaActual].countries.Spain.regions[6].sub_regions.forEach((element, index) => {
                 //console.log(element);
-                separarComunitats(element)
-
+                
+                document.getElementById("totalInfectats"+index).innerHTML = element.today_confirmed;
+                document.getElementById("totalDefuncions"+index).innerHTML = element.today_deaths;
+                document.getElementById("nousInfectats"+index).innerHTML = element.today_new_confirmed;
+                document.getElementById("nousDefuncions"+index).innerHTML = element.today_new_deaths;
+                document.getElementById("date"+index).innerHTML = "Última actualització " + fechaActual;
             });
             
             
