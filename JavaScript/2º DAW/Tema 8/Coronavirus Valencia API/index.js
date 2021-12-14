@@ -13,7 +13,17 @@ function carregarApi(){
     let anyActual = fecha.getFullYear();
     let mesActual = fecha.getMonth() + 1; 
     let diaActual = fecha.getDate();
+
+    if(mesActual < 10){
+        mesActual = "0" + mesActual;
+    }
+
+    if(diaActual < 10){
+        diaActual = "0"+ diaActual;
+    }
+
     let fechaActual = anyActual+"-" +mesActual+ "-" +diaActual;
+    console.log(fechaActual = anyActual+"-" +mesActual+ "-" +diaActual)
     coronavirusComunitatValenciana = new XMLHttpRequest();
 
     coronavirusComunitatValenciana.onreadystatechange = function(){
@@ -38,14 +48,4 @@ function carregarApi(){
     }
     coronavirusComunitatValenciana.open("GET", "https://api.covid19tracking.narrativa.com/api/"+fechaActual+"/country/spain", true);
     coronavirusComunitatValenciana.send();
-}
-
-
-function separarComunitats(comunitats){
-    for(let i = 0; i < comunitats.lenght; i++){
-        let totalInfectats = document.getElementsByClassName["totalInfectats"][i];
-        let totalDefuncions = document.getElementsByClassName["totalDefuncions"][i];
-        let nousInfectats = document.getElementsByClassName["nousInfectats"][i];
-        let nousDefuncions = document.getElementsByClassName["nousDefuncions"][i];
-    }
 }
