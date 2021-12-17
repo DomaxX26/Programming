@@ -1,12 +1,38 @@
 <?php
-require_once 'src/Registry.php';
+require "vendor/autoload.php";
 
-$pdo = new PDO("mysql:host=mysql-server;dbname=movieFX;charset=utf8;user=root;password=secret");
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+use App\Josep\Config;
+use App\Registry;
 
-try {
-    Registry::set("PDO", $pdo);
-} catch (Exception $e) {
-    die($e->getMessage());
-}
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FirePHPHandler;
 
+
+$configXML = new \App\Alex\Config(__DIR__ . '/./config.xml');
+$configJson = new \App\Josep\Config(__DIR__ . '/./config.json');
+
+Registry::setPDO($configXML);
+//Registry::setPDO($configJson);
+
+// create a log channel
+$log = new Logger('movies');
+$log->pushHandler(new StreamHandler(__DIR__ . "/./app.log", Logger::DEBUG));
+$log->pushHandler(new FirePHPHandler());
+Registry::set(Registry::LOGGER, $log);
+
+$router = new AltoRouter();
+
+Registry::set(Registry::ROUTER, $router);
+
+// map homepage
+//$router->map('GET', '/', function() {
+//    require __DIR__ . '/views/home.php';
+//});
+
+
+// map homepage
+$router->map('GET', '/', 'MovieController#list', 'movie_list');
+
+// dynamic named route
+$router->map('GET|POST', '/movies/[i:id]/edit', "MovieController#edit", 'movie_edit');

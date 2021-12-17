@@ -1,10 +1,14 @@
 <?php
 declare(strict_types=1);
 
+namespace App;
+
+use Webmozart\Assert\Assert;
+
 class Movie
 {
     const POSTER_PATH = "posters";
-    public int $id;
+    public ?int $id = null;
     private string $title;
     private string $overview;
     private string $releaseDate;
@@ -13,17 +17,36 @@ class Movie
     private string $poster;
 
     /**
-     * @return int
+     * @param ?int $id
+     * @param string $title
+     * @param string $overview
+     * @param string $releaseDate
+     * @param float $rating
+     * @param string $poster
      */
-    public function getId(): int
+    public function __construct(?int $id, string $title, string $overview, string $releaseDate, float $rating, string $poster)
+    {
+        $this->setId($id);
+        $this->setTitle($title);
+        $this->setOverview($overview);
+        $this->setReleaseDate($releaseDate);
+        $this->setRating($rating);
+        $this->setPoster($poster);
+    }
+
+
+    /**
+     * @return ?int
+     */
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param ?int $id
      */
-    public function setId(int $id): void
+    public function setId(?int $id): void
     {
         $this->id = $id;
     }
@@ -41,6 +64,7 @@ class Movie
      */
     public function setTitle(string $title): void
     {
+        Assert::lengthBetween($title, 1, 100);
         $this->title = $title;
     }
 
@@ -57,6 +81,7 @@ class Movie
      */
     public function setOverview(string $overview): void
     {
+        Assert::lengthBetween($overview, 1, 500);
         $this->overview = $overview;
     }
 
@@ -73,6 +98,8 @@ class Movie
      */
     public function setReleaseDate(string $releaseDate): void
     {
+        if (!validate_date($releaseDate))
+            throw new \WebMozart\Assert\InvalidArgumentException("date invalid");
         $this->releaseDate = $releaseDate;
     }
 
@@ -105,6 +132,7 @@ class Movie
      */
     public function setPoster(string $poster): void
     {
+        Assert::notEmpty($poster);
         $this->poster = $poster;
     }
 
@@ -124,4 +152,32 @@ class Movie
         $this->voters = $voters;
     }
 
+    public static function fromArray(array $data): Movie
+    {
+        if (empty($data["id"])) 
+            $id = null;
+        else
+            $id = (int)$data["id"];
+                
+        return new Movie(
+            $id,
+            $data["title"],
+            $data["overview"],
+            $data["release_date"],
+            (float)$data["rating"],
+            $data["poster"]
+        );
+    }
+
+    public function toArray(): array
+    {
+        return [
+            "id" => $this->getId(),
+            "title" => $this->getTitle(),
+            "overview" => $this->getOverview(),
+            "release_date" => $this->getReleaseDate(),
+            "rating" => $this->getRating(),
+            "poster" => $this->getPoster()
+        ];
+    }
 }

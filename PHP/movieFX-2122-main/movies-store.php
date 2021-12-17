@@ -1,5 +1,16 @@
-<?php declare(strict_types=1); ?>
-<?php
+<?php declare(strict_types=1);
+
+use App\Exceptions\FileUploadException;
+use App\Exceptions\RequiredValidationException;
+use App\Exceptions\TooLongValidationException;
+use App\Exceptions\TooShortValidationException;
+use App\Exceptions\ValidationException;
+use App\FlashMessage;
+use App\Movie;
+use App\Registry;
+use App\UploadedFileHandler;
+use Webmozart\Assert\Assert;
+
 session_start();
 //if (empty($_SESSION["user"]))
 //    die("<p><a href= \"login.php\">Login</a> or die!</p>");
@@ -9,25 +20,17 @@ session_start();
 // Acumularé els errors en un array per a mostrar-los al final.
 // Use la sintaxi alternativa de les estructures de control per a la part de vistes.
 // Cree funció clean per a netejar valors
-
-require "helpers.php";
-require 'src/Exceptions/FileUploadException.php';
-require_once 'src/Exceptions/NoUploadedFileException.php';
-require_once 'src/Exceptions/InvalidTypeFileException.php';
-require_once 'src/Movie.php';
-require_once 'src/FlashMessage.php';
-require_once 'src/UploadedFileHandler.php';
-require_once 'src/Registry.php';
-
 require_once 'bootstrap.php';
 
-const MAX_SIZE = 1024 * 1000;
+
+const MAX_SIZE = 1024 * 1000 * 2;
 
 $data["title"] = "";
 $data["release_date"] = "";
 $data["overview"] = "";
 $data["poster"] = "";
 $data["rating"] = 0;
+
 $validTypes = ["image/jpeg", "image/jpg"];
 
 $errors = [];
@@ -45,51 +48,30 @@ if (!isPost()) {
 }
 
 // per a la vista necessitem saber si s'ha processat el formulari
-$token = FlashMessage::get("token", "");
+$token = FlashMessage::get("token");
 
+$data["title"] = clean($_POST["title"]??"");
+$data["overview"] = clean($_POST["overview"]??"");
+$data["release_date"] = $_POST["release_date"];
 
-if (empty($token) || ($_POST["token"] !== $token))
-    die('Token invàlid');
 
 try {
-    if (validate_string($_POST["title"], 1, 100))
-        $data["title"] = clean($_POST["title"]);
-
-} catch (RequiredValidationException $e) {
-    $errors[] = "Error en validar el títol";
-} catch (TooLongValidationException $e) {
-    $errors[] = "Error en validar el títol";
-} catch (TooShortValidationException $e) {
-    $errors[] = "Error en validar el títol";
-}
-
-try {
-    if (validate_string($_POST["overview"], 1, 1000))
-        $data["overview"] = clean($_POST["overview"]);
-
-} catch (ValidationException $e) {
-    $errors[] = "Error en validar la sinopsi";
-}
-
-
-if (!empty($_POST["release_date"]) && (validate_date($_POST["release_date"])))
-    $data["release_date"] = $_POST["release_date"];
-else
-    $errors[] = "Cal indicar una data correcta";
-
-
- try {
-
-    $uploadedFileHandler = new UploadedFileHandler("poster", ["image/jpeg"], MAX_SIZE);
-    $data["poster"] = $uploadedFileHandler->handle("posters");
+    $uploadedFileHandler = new UploadedFileHandler("poster", $validTypes, MAX_SIZE);
+    $data["poster"] = $uploadedFileHandler->handle(Movie::POSTER_PATH);
 
 } catch (FileUploadException $e) {
     $errors[] = $e->getMessage();
 }
 
+try {
+    $movie = Movie::fromArray($data);
+}
+catch (\Webmozart\Assert\InvalidArgumentException $e) {
+       $errors[]= $e->getMessage();
+}
 
 if (empty($errors)) {
-    $pdo = Registry::get(Registry::PDO);
+    $pdo = Registry::get("PDO");
 
     $moviesStmt = $pdo->prepare("INSERT INTO movie(title, overview, release_date, rating, poster) 
         VALUES (:title, :overview, :release_date, :rating, :poster)");
@@ -100,15 +82,16 @@ if (empty($errors)) {
         $errors[] = "No s'ha pogut inserir el registre";
     else {
         $message = "S'ha inserit el registre amb el ID ({$pdo->lastInsertId("movie")})";
-        FlashMessage::set("message",  $message);
+        FlashMessage::set("message", $message);
         header("Location: index.php");
         exit();
     }
 
 }
 // com que si hi ha hagut èxit redirigirem a la pàgina principal plantegem ací el pitjor escenari.
-FlashMessage::set("data",  $data);
+FlashMessage::set("data", $data);
 FlashMessage::set("errors", $errors);
+
 header("Location: movies-create.php");
 exit();
 
