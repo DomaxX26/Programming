@@ -18,6 +18,15 @@ function carregarLlibres(){
 	});
 }
 
+function carregarAutors(){
+    fetch('https://www.serverred.es/api/libros')
+	.then(response => response.json())
+	.then(data => {
+        console.log(data);
+        mostrarLlibres(data);
+	});
+}
+
 function mostrarLlibres(data){
     var files = document.getElementById("files");
     data.resultado.forEach((element, index) => {
