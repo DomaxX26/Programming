@@ -63,8 +63,11 @@ function validar(e) {
     esborrarError();
     e.preventDefault();
     if (validarNom() && validarAnyNaixement()) {
-        document.location.assign("../llistatAutors.html");
         afegirAutor();
+        setTimeout(function(){
+            document.location.href = "llistatAutors.html";
+        },200);
+        
         return true;
     } else {
         return false;

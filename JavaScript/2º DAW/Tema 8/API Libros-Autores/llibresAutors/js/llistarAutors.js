@@ -31,6 +31,8 @@ function mostrarAutors(data){
         let botonBorrar = document.createElement("button");
         let botonBorrarTexto = document.createTextNode("Esborrar");
         botonBorrar.setAttribute("class", "btn btn-primary btn-lg my-3");
+        botonBorrar.setAttribute("onclick", "borrarAutors(this)");
+        botonBorrar.setAttribute("id",element._id);
         botonBorrar.appendChild(botonBorrarTexto);
 
         let botonModificar = document.createElement("button");
@@ -53,4 +55,17 @@ function mostrarAutors(data){
 
         files.appendChild(tr);
     });
+}
+
+function borrarAutors(element){
+    fetch("https://www.serverred.es/api/autores/"+element.id,{
+        method:'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.log(error));
+}
+
+function modificarAutors(){
+
 }
