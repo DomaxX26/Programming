@@ -31,13 +31,15 @@ function mostrarAutors(data){
         let botonBorrar = document.createElement("button");
         let botonBorrarTexto = document.createTextNode("Esborrar");
         botonBorrar.setAttribute("class", "btn btn-primary btn-lg my-3");
-        botonBorrar.setAttribute("onclick", "borrarAutors(this)");
+        botonBorrar.setAttribute("onclick", "comprobarAutor(this)");
         botonBorrar.setAttribute("id",element._id);
         botonBorrar.appendChild(botonBorrarTexto);
 
         let botonModificar = document.createElement("button");
         let botonModificarTexto = document.createTextNode("Modificar");
         botonModificar.setAttribute("class", "btn btn-primary btn-lg my-3");
+        botonModificar.setAttribute("onclick", "paginaModificar(this)");
+        botonModificar.setAttribute("id", element._id);
         botonModificar.appendChild(botonModificarTexto);
 
         let nom = document.createTextNode(element.nombre);
@@ -66,6 +68,26 @@ function borrarAutors(element){
     .catch(error => console.log(error));
 }
 
-function modificarAutors(){
+function paginaModificar(elem){
+    localStorage.setItem("idAutor", JSON.stringify(elem.id));
+    window.location.href = "modificarAutors.html";
+}
 
+function comprobarAutor(elem){
+    fetch("https://serverred.es/api/libros")
+    .then(response => response.json())
+    .then(data => {
+        var comprobar = true;
+        data.resultado.forEach(element =>{
+            if(element.autor = elem.id){
+                comprobar = false;
+            }
+        })
+        if(comprobar == false){
+            alert("No es pot borrar aquest Autor, perquè te un llibre a la venta.");
+        }else{
+            borrarAutors(elem.id);
+        }
+    })
+    .catch(error => console.log(error));
 }
