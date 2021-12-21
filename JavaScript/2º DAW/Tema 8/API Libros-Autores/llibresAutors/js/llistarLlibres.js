@@ -50,6 +50,8 @@ function mostrarLlibres(libros){
         let botonModificar = document.createElement("button");
         let botonModificarTexto = document.createTextNode("Modificar");
         botonModificar.setAttribute("class", "btn btn-primary btn-lg my-3");
+        botonModificar.setAttribute("onclick", "modificarLlibre(this)");
+        botonModificar.setAttribute("id",element._id);
         botonModificar.appendChild(botonModificarTexto);
 
         let titulo = document.createTextNode(element.titulo);
@@ -82,6 +84,11 @@ function borrarLlibre(element){
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
+}
+
+function paginaModificar(elem){
+    localStorage.setItem("idLlibre", JSON.stringify(elem.id));
+    window.location.href = "modificarllibres.html";
 }
 
 function traureNom(id){
