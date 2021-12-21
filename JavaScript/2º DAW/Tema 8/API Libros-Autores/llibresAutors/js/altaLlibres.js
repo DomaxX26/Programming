@@ -2,6 +2,7 @@ window.onload = main;
 
 function main(){
     document.getElementById("btnGravar").addEventListener("click", validar, false);
+    validarAutor();
 }
 
 function validarTitulo(){
@@ -22,14 +23,6 @@ return true;
 
 }
 
-function validarEditorial(){
-    let editorial = document.getElementById("editorial");
-
-    if(editorial == null){
-        editorial.value = "No hi ha editorial";
-    }
-}
-
 function validarPrecio(){
     let precio = document.getElementById("preu");
 
@@ -40,13 +33,31 @@ function validarPrecio(){
         }
         if(precio.validity.rangeUnderflow){
             error2(precio, "No pot ser un preu negatiu");
+            return false;
         }
     }
     return true;
 }
 
 function validarAutor(){
+    fetch('https://www.serverred.es/api/autores')
+	.then(response => response.json())
+	.then((data) => {
+        console.log(data);
+        mostrarAutors(data);
+	});
+}
 
+function mostrarAutors(data){
+    let autor = document.getElementById("autor");
+
+    data.resultado.forEach(element => {
+        let option = document.createElement("option");
+        let optionTxt = document.createTextNode(element.nombre);
+        option.setAttribute("value", element._id);
+        option.appendChild(optionTxt);
+        autor.appendChild(option);
+    });
 }
 
 function esborrarError() {
@@ -66,12 +77,11 @@ function error2(element, missatge) {
 function validar(e) {
     esborrarError();
     e.preventDefault();
-    if (validarTitulo() && validarEditorial() && validarPrecio() && validarAutor()) {
+    if (validarTitulo() && validarPrecio()) {
         afegirLlibres();
         setTimeout(function(){
             document.location.href = "llistatLlibres.html";
-        },200);
-        
+        },1000);  
         return true;
     } else {
         return false;
@@ -80,12 +90,15 @@ function validar(e) {
 
 
 function afegirLlibres(){
+    
     var llibre = {
         titulo: document.getElementById("titol").value,
         editorial: document.getElementById("editorial").value,
         precio: document.getElementById("preu").value,
-        autor: document.getElementById("").value
+        autor: document.getElementById("autor").value
     }
+
+    console.log(llibre);
 
     fetch("https://www.serverred.es/api/libros",{
         method:'POST',

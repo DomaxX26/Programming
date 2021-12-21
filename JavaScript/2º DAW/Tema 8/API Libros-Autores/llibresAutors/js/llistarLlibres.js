@@ -24,12 +24,14 @@ function carregarAutors(){
 	.then(data => {
         console.log(data);
         mostrarLlibres(data);
-	});
+    });
+    
 }
 
-function mostrarLlibres(data){
+
+function mostrarLlibres(libros){
     var files = document.getElementById("files");
-    data.resultado.forEach((element, index) => {
+    libros.resultado.forEach(element => {
         let tr = document.createElement("tr");
         
         let td1 = document.createElement("td");
