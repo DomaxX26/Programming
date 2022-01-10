@@ -118,5 +118,42 @@ function validar(e) {
 }
 
 function reserva() {
-    window.location.href = "reservarUsuari.html";
+  //Objeto obtenido del localStorage
+if(JSON.parse(localStorage.getItem("usuari")) != null) {
+    var usuari = JSON.parse(localStorage.getItem("usuari"));
+}
+
+if(JSON.parse(localStorage.getItem("llibre")) != null) {
+    var llibre = JSON.parse(localStorage.getItem("llibre"));
+}
+console.log(usuari,llibre);
+//Fecha de la reserva
+var dateVal = document.getElementById("dataPrestec").value;
+var dataRes = new Date(dateVal);
+
+//Fecha de devolución
+var dataDev = new Date();
+dataDev.setDate(dataRes.getDate() + dies);
+
+//Objeto a añadir a la API
+var reserva = {
+    usuario: usuari._id,
+    libro: llibre._id,
+    fecha: dataRes,
+    fechaDevolucion: dataDev
+}
+
+//Subida del objeto a la API
+fetch("https://www.serverred.es/api/reservas", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(reserva),
+})
+.then(response => response.json())
+.then(data => location.assign("llistatReserves.html"))
+.catch((error) => {
+    console.log("Error => ", error)
+})
 }
