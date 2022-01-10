@@ -11,7 +11,6 @@ function nouLlibre() {
 }
 
 function cargarAutor() {
-
     fetch("https://www.serverred.es/api/autores")
         .then(response => response.json())
         .then(data => {

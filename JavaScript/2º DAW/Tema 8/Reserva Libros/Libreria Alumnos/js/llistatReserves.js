@@ -1,5 +1,7 @@
 window.onload = main;
 
+var arrayUsuario = [];
+
 function main(){
     obtenirUsuaris();
 }
@@ -8,7 +10,6 @@ function obtenirUsuaris(){
     fetch('https://serverred.es/api/usuarios')
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         mostrarUsuaris(data);
     })
 }
@@ -28,8 +29,8 @@ function mostrarUsuaris(usuario){
 
         let checkbox = document.createElement("input");
         checkbox.setAttribute("type", "checkbox");
-        checkbox.setAttribute("onclick", "reservarLlibre(this)");
         checkbox.setAttribute("id", element._id);
+        checkbox.addEventListener("click", reservarLlibre);
 
         let nom = document.createTextNode(element.nombre);
         let telefono = document.createTextNode(element.telefono);
@@ -49,10 +50,21 @@ function mostrarUsuaris(usuario){
         tr.appendChild(td5);
 
         files.appendChild(tr);
-
+        arrayUsuario.push(element);
     });
 }
 
-function reservarLlibre(id){
+function reservarLlibre(){
+    arrayUsuario.forEach(element => {
+        if(this.id == element._id){
+            let usuari = {
+                id: element._id,
+                nom: element.nombre,
+                email: element.email
+            };
 
+            localStorage.setItem("usuari", JSON.stringify(usuari));
+        }
+    });
+    window.location.href = "reservarLlibre.html";
 }
