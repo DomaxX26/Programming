@@ -94,7 +94,6 @@ function registrar() {
 })
 .catch((error) => {
     console.log("Error => ", error);
-
 })
 }
 
