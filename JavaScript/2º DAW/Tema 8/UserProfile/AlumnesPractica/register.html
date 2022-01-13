@@ -10,7 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 <!-- Load an icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="areaPersonal.js"></script>
+<script src="js/registre.js"></script>
     <title>Menu APP</title>
 </head>
 <body>
@@ -61,71 +61,37 @@
           </nav>
     </header>
     <div class="container">
-        <h1>Àrea personal</h1>
-          <form>
-
-        <div class="row">
-        
-        
-        
-          <div class="col-sm-8">
-            
-
-
-
-            <h4 class="text-danger" id="missatgeError"></h4>
-       
+        <h1>Registrar nou usuari</h1>
+        <h4 class="text-danger" id="missatgeError"></h4>
+        <form>
           <div class="form-group">
             <label for="nom">Nom</label>
-            <input type="text" class="form-control" id="nom" name="nom" placeholder="Introduir nom">
+            <input type="text" class="form-control" id="nom" name="nom" placeholder="Introduir nom" pattern="^[A-Za-z ]{6,255}$" required>
           </div>
-         
           <div class="form-group">
-            <label for="passworda">Contrasenya Actual</label>
-            <input type="password" class="form-control" id="passworda" name="passworda" placeholder="Introduir contrasenya actual" >
+            <label for="email">Correu electrònic</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Introduir email"  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" maxlength="1024" required>
           </div>
-          
           <div class="form-group">
             <div class="row">
               <div class="col">
-                <label for="password">Nova Contrasenya</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Contrasenya" >
+                <label for="password">Contrasenya</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Contrasenya" pattern="^[a-z0-9._%+-]{6,}" required>
               </div>
               <div class="col">
                 <label for="passwordc">Repetir contrasenya</label>
-                <input type="password" class="form-control" id="passwordc" name="passwordc" placeholder=" Repetir contrasenya"  >
+                <input type="password" class="form-control" id="passwordc" name="passwordc" placeholder=" Repetir contrasenya" required>
               </div>
             </div>
-            </div>
 
-            <div class="form-group">
-              <div class="custom-file">
-                <label class="form-label" for="customFile">Imatge del avatar</label>
-                <input type="file" class="form-control" id="customFile" />
-              </div>
-          </div>
-          <button type="submit" id="enviar" class="mt-2 btn btn-primary">Actualitzar</button>
-        
-        </div>
-        <div class="col-sm-4  p-2">
-        
-          <img id="avatar" src="/img/profile-pic.png" alt="" style ="width: 10em; height: 10em;"  class="mt-4 img-responsive user-avatar-md rounded-circle">
-          
-          
-
-        </div>
-        </div>
-
-
-      </form>
-      
+          <button type="submit" id="enviar" class="mt-2 btn btn-primary">Registrar</button>
+        </form>
 
     
     <footer class="mt-5">
         <p class="mx-auto">DWEC - Exercici Ajax 2021 - David Crespo</p>
     </footer>
 
-    </div>
 
 </body>
 </html>
