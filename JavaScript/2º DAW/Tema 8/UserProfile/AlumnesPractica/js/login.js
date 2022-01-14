@@ -54,13 +54,13 @@ function login() {
 	})
 		.then(response => response.json())
 		.then(data => {
-			if (data.error == null) {
-				location.assign("areaPersonal.html")
-			} else {
+			if (data.error != null) {
 				error2(document.getElementById("nom"), data.error)
+			} else {
+				localStorage.setItem("token", data.data.token);
+				location.assign("areaPersonal.html");
+				console.log(data);
 			}
-			console.log(data);
-
 		})
 		.catch((error) => {
 			console.log("Error => ", error);
