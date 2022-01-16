@@ -1,43 +1,110 @@
 window.onload = main;
 
-function main(){
-    document.getElementById("enviar").addEventListener("click",validar, false);
-    document.getElementById("enviarAvatar").addEventListener("click", canviarAvatar);
+function main() {
+    if (JSON.parse(localStorage.getItem("token") != null)) {
+        carregarDades();
+        document.getElementById("enviar").addEventListener("click", validar, false);
+        document.getElementById("enviarAvatar").addEventListener("click", canviarAvatar);
+    } else {
+        location.assign("login.html");
+    }
+
 }
 
-function validarNom(){
+function validarNom() {
     let nom = document.getElementById("nom");
 
-    if(!nom.checkvalidity){
-        if(nom.validity.valueMissing){
-            error2(nom,"Nom Obligatori");
+    if (!nom.checkvalidity) {
+        if (nom.validity.valueMissing) {
+            error2(nom, "Nom Obligatori");
             return false;
         }
-        if(nom.validity.patternMismatch){
-            error2(nom, "No es correcte el nom introduït");
+        if (nom.validity.patternMismatch) {
+            error2(nom, "No es correcte el format del nom introduït");
             return false;
         }
     }
     return true;
 }
 
-function contrasenyaActual(){
+function carregarDades() {
+    
+    fetch("https://userprofile.serverred.es/api/areaPersonal", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "auth-token" : localStorage.getItem("token")
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            let user = document.getElementById("user");
+            let input = document.getElementById("nom");
 
+            let nombre  = document.createTextNode(data.data.user.name);
+            canviarAvatar(nombre);
+            user.replaceChildren(nombre);
+            input.setAttribute("value", data.data.user.name);
+        })
+        .catch((error) => {
+            console.log("Error => ", error);
+        })
 }
 
-function novaContrasenya(){
+function novaContrasenya() {
+    let contrasenya = document.getElementById("password");
 
+    if (!contrasenya.checkValidity()) {
+        if (contrasenya.validity.valueMissing) {
+            error2(contrasenya, "Contrasenya obligatoria");
+            return false;
+        }
+        if (contrasenya.validity.patternMismatch) {
+            error2(contrasenya, "Contrasenya no te el format correcte");
+            return false;
+        }
+    }
+    return true;
 }
 
-function validarContrasenya(){
+function validarContrasenya() {
+    let contrasenya1 = document.getElementById("password").value;
+    let contrasenya2 = document.getElementById("passwordc").value;
 
+    if (contrasenya2 != contrasenya1) {
+        error2(contrasenya1, "Les contrasenyes no coincideixen");
+        return false;
+    }
+    return true;
 }
 
-function canviarAvatar(){
+function canviarAvatar(nombre) {
+    const formData = new FormData();
+    const fileField = document.querySelector('input[type="file"]');
 
+    formData.append("name",nombre);
+    formData.append("avatar", fileField.files[0]);
+    var token = localStorage.getItem("token");
+
+    fetch(" https://userprofile.serverred.es/api/areapersonal/avatar",{
+        method: "PUT",
+        headers : {
+            'Content-Type' : 'application/x-www-form-urlencoded',
+            'Accept' : 'application/json', 
+            "auth-token": `${token}` 
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(result =>{
+        console.log("Success:",result);
+    })
+    .catch(error=>{
+        console.log("Error:",error);
+    })
 }
 
-function actualitzar(){
+function actualitzar() {
 
 }
 
@@ -57,12 +124,10 @@ function error2(element, missatge) {
 function validar(e) {
     esborrarError();
     e.preventDefault();
-    if (validarNom() && contrasenyaActual() && novaContrasenya() && validarContrasenya()) {
+    if (validarNom() && novaContrasenya() && validarContrasenya()) {
         actualitzar();
         return true;
-    }  else {
+    } else {
         return false;
     }
 }
-
-
