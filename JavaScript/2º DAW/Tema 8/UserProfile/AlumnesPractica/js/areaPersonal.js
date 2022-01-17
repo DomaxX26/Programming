@@ -105,12 +105,10 @@ function canviarAvatar(e) {
     .then(carregarDades())
     .catch(error=>{
         console.log("Error:",error);
-        error2(document.getElementById("nom"),error);
     })
-}
-
-function actualitzar() {
-
+    setTimeout(() => {
+        window.location.reload();
+    }, 150);
 }
 
 function esborrarError() {
@@ -130,9 +128,41 @@ function validar(e) {
     esborrarError();
     e.preventDefault();
     if (validarNom() && novaContrasenya() && validarContrasenya()) {
-        actualitzar();
+        cambiarPassword();
         return true;
     } else {
         return false;
     }
+}
+
+function cambiarPassword() {
+    var passwd = {
+        "name": document.getElementById("nom").value,
+        "password": document.getElementById("passworda").value,
+        "newPassword": document.getElementById("password").value
+    }
+
+    fetch(" https://userprofile.serverred.es/api/areaPersonal", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                'Accept': 'application/json',
+                "auth-token": localStorage.getItem("token")
+            },
+            body: JSON.stringify(passwd)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            if (data.error == null) {
+                alert("S'ha actualitzat la contraseña correctament");
+            }
+            else{
+                error2(document.getElementById("nom"), data.error);
+            }
+        })
+        .catch(error => console.log(error));
+        setTimeout(() => {
+            window.location.reload();
+        }, 150);
 }
