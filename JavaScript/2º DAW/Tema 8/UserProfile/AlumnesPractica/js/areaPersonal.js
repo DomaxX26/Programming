@@ -38,11 +38,16 @@ function carregarDades() {
     })
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             let user = document.getElementById("user");
             let input = document.getElementById("nom");
-
+            let avatarAP = document.getElementById("avatarAP");
+            let avatar = document.getElementById("avatar");
+            
             let nombre  = document.createTextNode(data.data.user.name);
-            canviarAvatar(nombre);
+
+            avatarAP.setAttribute("src", "https://userprofile.serverred.es/public/img/"+ data.data.user.avatar);
+            avatar.setAttribute("src", "https://userprofile.serverred.es/public/img/"+ data.data.user.avatar);
             user.replaceChildren(nombre);
             input.setAttribute("value", data.data.user.name);
         })
@@ -78,19 +83,16 @@ function validarContrasenya() {
     return true;
 }
 
-function canviarAvatar(nombre) {
+function canviarAvatar(e) {
+    e.preventDefault();
     const formData = new FormData();
     const fileField = document.querySelector('input[type="file"]');
 
-    formData.append("name",nombre);
     formData.append("avatar", fileField.files[0]);
     var token = localStorage.getItem("token");
-
     fetch(" https://userprofile.serverred.es/api/areapersonal/avatar",{
         method: "PUT",
         headers : {
-            'Content-Type' : 'application/x-www-form-urlencoded',
-            'Accept' : 'application/json', 
             "auth-token": `${token}` 
         },
         body: formData
@@ -98,9 +100,12 @@ function canviarAvatar(nombre) {
     .then(response => response.json())
     .then(result =>{
         console.log("Success:",result);
+        
     })
+    .then(carregarDades())
     .catch(error=>{
         console.log("Error:",error);
+        error2(document.getElementById("nom"),error);
     })
 }
 
