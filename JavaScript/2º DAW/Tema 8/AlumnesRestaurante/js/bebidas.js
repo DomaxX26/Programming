@@ -5,25 +5,24 @@ function main() {
         cargarDatos();
         carregarDades();
     }
-    document.getElementById("newMesa").addEventListener("click", novaTaula);
+    document.getElementById("newBebida").addEventListener("click", novaBeguda);
     document.getElementById("confirmar").addEventListener("click", validar, false);
-    document.getElementById("cancelar").addEventListener("click", ocultarTaula);
+    document.getElementById("cancelar").addEventListener("click", ocultarBeguda);
 }
 
-function novaTaula() {
+function novaBeguda() {
     document.getElementById("formulario").setAttribute("class", "visually-visible");
 }
 
-function ocultarTaula() {
+function ocultarBeguda() {
     document.getElementById("formulario").setAttribute("class", "visually-hidden");
     esborrarError();
-    document.getElementById("numero").value = "";
-    document.getElementById("comensales").value = "";
-    document.getElementById("descripcion").value = "";
+    document.getElementById("nombre").value = "";
+    document.getElementById("precio").value = "";
 }
 
 function cargarDatos() {
-    fetch("https://restaurante.serverred.es/api/mesas", {
+    fetch("https://restaurante.serverred.es/api/bebidas", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -33,7 +32,7 @@ function cargarDatos() {
         .then(response => response.json())
         .then(data => {
             data.data.data.forEach(element => {
-                mostrarMesas(element);
+                mostrarBebidas(element);
             });
         })
         .catch((error) => {
@@ -41,7 +40,8 @@ function cargarDatos() {
         })
 }
 
-function mostrarMesas(element) {
+function mostrarBebidas(element) {
+
     var files = document.getElementById("files");
 
     let tr = document.createElement("tr");
@@ -50,37 +50,33 @@ function mostrarMesas(element) {
     let td2 = document.createElement("td");
     let td3 = document.createElement("td");
     let td4 = document.createElement("td");
-    let td5 = document.createElement("td");
 
     let botonBorrar = document.createElement("button");
     let botonBorrarTexto = document.createTextNode("Esborrar");
     botonBorrar.setAttribute("class", "btn btn-primary btn-lg my-3");
-    botonBorrar.setAttribute("onclick", "borrarMesa(this)");
+    botonBorrar.setAttribute("onclick", "borrarBebida(this)");
     botonBorrar.setAttribute("id", element._id);
     botonBorrar.appendChild(botonBorrarTexto);
 
     let botonModificar = document.createElement("button");
     let botonModificarTexto = document.createTextNode("Modificar");
     botonModificar.setAttribute("class", "btn btn-primary btn-lg my-3");
-    botonModificar.setAttribute("onclick", "modificarMesa(this)");
+    botonModificar.setAttribute("onclick", "modificarBebida(this)");
     botonModificar.setAttribute("id", element._id);
     botonModificar.appendChild(botonModificarTexto);
 
-    let numero = document.createTextNode(element.numero);
-    let comensales = document.createTextNode(element.comensales);
-    let descripcion = document.createTextNode(element.descripcion);
+    let numero = document.createTextNode(element.nombre);
+    let comensales = document.createTextNode(element.precio);
 
     td1.appendChild(botonBorrar);
     td2.appendChild(botonModificar);
     td3.appendChild(numero);
     td4.appendChild(comensales);
-    td5.appendChild(descripcion);
 
     tr.appendChild(td1);
     tr.appendChild(td2)
     tr.appendChild(td3);
     tr.appendChild(td4);
-    tr.appendChild(td5);
 
     files.appendChild(tr);
 }
@@ -110,48 +106,40 @@ function carregarDades() {
         })
 }
 
-function validarNumMesa() {
-    let numero = document.getElementById("numero");
+function validarNombre() {
+    let nombre = document.getElementById("nombre");
 
-    if (!numero.checkValidity()) {
-        if (numero.validity.valueMissing) {
-            error2(numero, "Error: Numero de mesa es obligatorio");
+    if (!nombre.checkValidity()) {
+        if (nombre.validity.valueMissing) {
+            error2(nombre, "Error: Nombre de la bebida es obligatorio");
             return false;
         }
-        if (numero.validity.rangeOverflow) {
-            error2(numero, "Error: Numero de mesa superior a 100");
-            return false;
-        }
-        if (numero.validity.rangeUnderflow) {
-            error2(numero, "Error: Numero de mesa inferior a 1");
+        if (nombre.validity.patternMismatch) {
+            error2(nombre, "Error: El nombre de la bebida no es correcto (4 - 60 caracteres)");
             return false;
         }
     }
     return true;
 }
 
-function validarComensales() {
-    let comensales = document.getElementById("comensales");
+function validarPrecio() {
+    let precio = document.getElementById("precio");
 
-    if (!comensales.checkValidity()) {
-        if (comensales.validity.valueMissing) {
-            error2(comensales, "Error: Numero de comensales obligatorio");
+    if (!precio.checkValidity()) {
+        if (precio.validity.valueMissing) {
+            error2(precio, "Error: Precio de bebida es obligatorio");
             return false;
         }
-        if (comensales.validity.rangeOverflow) {
-            error2(comensales, "Error: Numero de comensales por encima de lo permitido");
-            return false;
-        }
-        if (comensales.validity.rangeUnderflow) {
-            error2(comensales, "Error: Numero de comensales inferior de lo permitido");
+        if (precio.validity.rangeUnderflow) {
+            error2(precio, "Error: Numero de precio inferior de lo permitido");
             return false;
         }
     }
     return true;
 }
 
-function borrarMesa(element) {
-    fetch("https://restaurante.serverred.es/api/mesas/" + element.id, {
+function borrarBebida(element) {
+    fetch("https://restaurante.serverred.es/api/bebidas/" + element.id, {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
@@ -165,20 +153,18 @@ function borrarMesa(element) {
     platoBorrado.parentNode.parentNode.parentNode.removeChild(platoBorrado.parentNode.parentNode);
 }
 
-function modificarMesa(element) {
-
-    var mesa = {
-        numero: document.getElementById("numero").value,
-        comensales: document.getElementById("comensales").value,
-        descripcion: document.getElementById("descripcion").value
+function modificarBebida(element) {
+    var bebida = {
+        nombre: document.getElementById("nombre").value,
+        precio: document.getElementById("precio").value,
     }
-    fetch("https://restaurante.serverred.es/api/mesas/" + element.id, {
+    fetch("https://restaurante.serverred.es/api/bebidas/" + element.id, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token")
         },
-        body: JSON.stringify(mesa)
+        body: JSON.stringify(bebida)
     })
         .then(response => response.json())
         .then(data => console.log(data))
@@ -201,30 +187,29 @@ function error2(element, missatge) {
 function validar(e) {
     esborrarError();
     e.preventDefault();
-    if (validarNumMesa() && validarComensales()) {
-        newTable();
+    if (validarNombre() && validarPrecio()) {
+        newDrink();
         return true;
     } else {
         return false;
     }
 }
 
-function newTable() {
-    var mesa = {
-        numero: document.getElementById("numero").value,
-        comensales: document.getElementById("comensales").value,
-        descripcion: document.getElementById("descripcion").value
+function newDrink() {
+    var bebida = {
+        nombre: document.getElementById("nombre").value,
+        precio: document.getElementById("precio").value,
     }
 
-    fetch("https://restaurante.serverred.es/api/mesas", {
+    fetch("https://restaurante.serverred.es/api/bebidas", {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token")
         },
-        body: JSON.stringify(mesa)
+        body: JSON.stringify(bebida)
     })
         .then(response => response.json())
-        .then(data => mostrarMesas(data.resultado))
+        .then(data => mostrarBebidas(data.resultado))
         .catch(error => console.log(error));
 }
