@@ -1,10 +1,12 @@
 window.onload = main;
 var infoTaula = [];
+var infoBebidas = [];
 
 function main() {
 	if (JSON.parse(localStorage.getItem("token") != null)) {
 		getDatos();
 		document.getElementById("confirmar").addEventListener("click", validar, false);
+		
 	} else {
 		location.assign("login.html");
 	}
@@ -92,20 +94,19 @@ function crearMesas(element) {
 	mesas.appendChild(div);
 }
 
-function cambiarColor(){
+function cambiarColor() {
 	infoTaula.forEach(element => {
-        document.getElementById(element._id).setAttribute("class", "mt-2 btn btn-primary p-3")
-    })
+		document.getElementById(element._id).setAttribute("class", "mt-2 btn btn-primary p-3")
+	})
 
-    var infoMesa = infoTaula.find(item => item._id == this.id);
+	var infoMesa = infoTaula.find(item => item._id == this.id);
 	var button = document.getElementById(infoMesa._id);
 	button.setAttribute("class", "mt-2 btn btn-danger p-3");
-	
+
 	let datosMesa = document.getElementById("datosMesa");
-	let txtMesa = document.createTextNode("Numero de comensales: " + infoMesa.comensales+ ", Descripción: " + infoMesa.descripcion);
+	let txtMesa = document.createTextNode("Numero de comensales: " + infoMesa.comensales + ", Descripción: " + infoMesa.descripcion);
 	datosMesa.replaceChildren(txtMesa);
 }
-
 
 
 function crearBebidas(element) {
@@ -119,11 +120,16 @@ function crearBebidas(element) {
 	input.setAttribute("id", element._id);
 	input.setAttribute("class", "mt-2 btn btn-info p-3");
 	input.setAttribute("value", element.nombre);
+	input.addEventListener("click", function () {
+		infoBebidas.push(element);
+		comandaBebidas();
+	});
 
 	div.appendChild(input);
 
 	bebidas.appendChild(div);
 }
+
 
 function crearPlatos(element) {
 	let div = document.createElement("div");
@@ -157,38 +163,38 @@ function validarNombre() {
 }
 
 function validarComensales() {
-    let comensales = document.getElementById("comensales");
+	let comensales = document.getElementById("comensales");
 
-    if (!comensales.checkValidity()) {
-        if (comensales.validity.valueMissing) {
-            error2(comensales, "Error: Numero de comensales obligatorio");
-            return false;
-        }
-        if (comensales.validity.rangeOverflow) {
-            error2(comensales, "Error: Numero de comensales por encima de lo permitido");
-            return false;
-        }
-        if (comensales.validity.rangeUnderflow) {
-            error2(comensales, "Error: Numero de comensales inferior de lo permitido");
-            return false;
-        }
-    }
-    return true;
+	if (!comensales.checkValidity()) {
+		if (comensales.validity.valueMissing) {
+			error2(comensales, "Error: Numero de comensales obligatorio");
+			return false;
+		}
+		if (comensales.validity.rangeOverflow) {
+			error2(comensales, "Error: Numero de comensales por encima de lo permitido");
+			return false;
+		}
+		if (comensales.validity.rangeUnderflow) {
+			error2(comensales, "Error: Numero de comensales inferior de lo permitido");
+			return false;
+		}
+	}
+	return true;
 }
 
-function nuevaComanda(){
+function nuevaComanda() {
 	console.log(infoTaula);
 	let nombre = document.getElementById("nombre").value;
 	let comensales = document.getElementById("comensales").value;
 	let notas = document.getElementById("notas").value;
 
 	var comanda = {
-		nom : nombre,
+		nom: nombre,
 		comensals: comensales,
 		estado: "Pendiete",
 		mesa: infoTaula._id,
 		bebidas: [],
-		platos:[],
+		platos: [],
 		notas: notas
 	}
 
@@ -202,11 +208,51 @@ function nuevaComanda(){
 	})
 		.then(response => response.json())
 		.then(data => {
-			
+
 		})
 		.catch((error) => {
 			console.log("Error => ", error);
 		})
+}
+
+function comandaBebidas() {
+	var comBebidas = document.getElementById("comBebidas");
+	comBebidas.replaceChildren("");
+	
+	console.log(infoBebidas);
+	infoBebidas.forEach(element => {
+		let tr = document.createElement("tr");
+
+		let td1 = document.createElement("td");
+		let td2 = document.createElement("td");
+		let td3 = document.createElement("td");
+
+		//Crear Boton
+		let input = document.createElement("input");
+		input.setAttribute("type", "button");
+		input.setAttribute("id", element._id);
+		input.setAttribute("class", "mt-2 btn btn-danger p-3");
+		input.setAttribute("value", "Borrar");
+
+		td1.appendChild(input);
+
+		//Añadir Bebida
+		let inputBebida = document.createElement("input");
+		inputBebida.setAttribute("type", "button");
+		inputBebida.setAttribute("id", element._id);
+		inputBebida.setAttribute("class", "mt-2 btn btn-primary p-3");
+		inputBebida.setAttribute("value", element.nombre);
+
+		td2.appendChild(inputBebida);
+
+		//Añadir Cantidad
+
+		//Añadir columnas
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+
+		comBebidas.appendChild(tr);
+	});
 }
 
 function esborrarError() {
