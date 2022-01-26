@@ -122,7 +122,7 @@ function crearBebidas(element) {
 	input.setAttribute("value", element.nombre);
 	input.addEventListener("click", function () {
 		infoBebidas.push(element);
-		comandaBebidas();
+		comandaBebidas(element._id);
 	});
 
 	div.appendChild(input);
@@ -215,11 +215,11 @@ function nuevaComanda() {
 		})
 }
 
-function comandaBebidas() {
+function comandaBebidas(idBoto) {
 	var comBebidas = document.getElementById("comBebidas");
 	comBebidas.replaceChildren("");
 	
-	console.log(infoBebidas);
+	var validar = false;
 	infoBebidas.forEach(element => {
 		let tr = document.createElement("tr");
 
@@ -237,22 +237,55 @@ function comandaBebidas() {
 		td1.appendChild(input);
 
 		//Añadir Bebida
-		let inputBebida = document.createElement("input");
-		inputBebida.setAttribute("type", "button");
-		inputBebida.setAttribute("id", element._id);
-		inputBebida.setAttribute("class", "mt-2 btn btn-primary p-3");
-		inputBebida.setAttribute("value", element.nombre);
-
-		td2.appendChild(inputBebida);
+		let b = document.createElement("b");
+		let txtBebida = document.createTextNode(element.nombre);
+		b.appendChild(txtBebida);
+		td2.appendChild(b);
 
 		//Añadir Cantidad
-
+		console.log(element);
+		if (idBoto == element._id) {
+            
+            validar = true;
+        } 
 		//Añadir columnas
 		tr.appendChild(td1);
 		tr.appendChild(td2);
 
 		comBebidas.appendChild(tr);
 	});
+}
+
+function añadirBebidaArray(elem) {
+    console.log(elem.id);
+    console.log(arrayBebidas);
+    console.log(arrayComanda.bebidas);
+
+    var validar = false;
+
+    arrayComanda.bebidas.forEach(element => {
+        if (elem.id == element._id) {
+            element.cantidad = element.cantidad+1;
+            validar = true;
+            reiniciarTable();
+        } 
+    })
+
+    if (validar == false) {
+        arrayBebidas.forEach(element => {
+            if (elem.id == element._id) {
+                var bebida = {
+                    "_id": element._id,
+                    "cantidad": 1,
+                    "estado": "Pendiente",
+                    "nombre": element.nombre,
+                    "precio": element.precio
+                }
+                arrayComanda.bebidas.push(bebida);
+                reiniciarTable();
+            }
+        })
+    }
 }
 
 function esborrarError() {
