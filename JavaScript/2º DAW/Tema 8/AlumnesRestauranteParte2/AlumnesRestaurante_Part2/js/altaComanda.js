@@ -1,12 +1,14 @@
 window.onload = main;
 var infoTaula = [];
 var infoBebidas = [];
+var bebidas = [];
 
 function main() {
 	if (JSON.parse(localStorage.getItem("token") != null)) {
 		getDatos();
-		document.getElementById("confirmar").addEventListener("click", validar, false);
-		
+		document
+			.getElementById("confirmar")
+			.addEventListener("click", validar, false);
 	} else {
 		location.assign("login.html");
 	}
@@ -33,9 +35,9 @@ async function carregarTaules() {
 				infoTaula.push(element);
 			});
 		})
-		.catch((error) => {
+		.catch(error => {
 			console.log("Error => ", error);
-		})
+		});
 }
 
 async function carregarBebidas() {
@@ -52,9 +54,9 @@ async function carregarBebidas() {
 				crearBebidas(element);
 			});
 		})
-		.catch((error) => {
+		.catch(error => {
 			console.log("Error => ", error);
-		})
+		});
 }
 
 async function carregarPlatos() {
@@ -71,9 +73,9 @@ async function carregarPlatos() {
 				crearPlatos(element);
 			});
 		})
-		.catch((error) => {
+		.catch(error => {
 			console.log("Error => ", error);
-		})
+		});
 }
 
 function crearMesas(element) {
@@ -96,18 +98,24 @@ function crearMesas(element) {
 
 function cambiarColor() {
 	infoTaula.forEach(element => {
-		document.getElementById(element._id).setAttribute("class", "mt-2 btn btn-primary p-3")
-	})
+		document
+			.getElementById(element._id)
+			.setAttribute("class", "mt-2 btn btn-primary p-3");
+	});
 
 	var infoMesa = infoTaula.find(item => item._id == this.id);
 	var button = document.getElementById(infoMesa._id);
 	button.setAttribute("class", "mt-2 btn btn-danger p-3");
 
 	let datosMesa = document.getElementById("datosMesa");
-	let txtMesa = document.createTextNode("Numero de comensales: " + infoMesa.comensales + ", Descripción: " + infoMesa.descripcion);
+	let txtMesa = document.createTextNode(
+		"Numero de comensales: " +
+		infoMesa.comensales +
+		", Descripción: " +
+		infoMesa.descripcion
+	);
 	datosMesa.replaceChildren(txtMesa);
 }
-
 
 function crearBebidas(element) {
 	let bebidas = document.getElementById("bebidas");
@@ -130,7 +138,6 @@ function crearBebidas(element) {
 	bebidas.appendChild(div);
 }
 
-
 function crearPlatos(element) {
 	let div = document.createElement("div");
 	div.setAttribute("class", "col");
@@ -144,7 +151,6 @@ function crearPlatos(element) {
 	div.appendChild(input);
 	document.getElementById("platos" + element.orden).appendChild(div);
 }
-
 
 function validarNombre() {
 	let nom = document.getElementById("nombre");
@@ -171,11 +177,17 @@ function validarComensales() {
 			return false;
 		}
 		if (comensales.validity.rangeOverflow) {
-			error2(comensales, "Error: Numero de comensales por encima de lo permitido");
+			error2(
+				comensales,
+				"Error: Numero de comensales por encima de lo permitido"
+			);
 			return false;
 		}
 		if (comensales.validity.rangeUnderflow) {
-			error2(comensales, "Error: Numero de comensales inferior de lo permitido");
+			error2(
+				comensales,
+				"Error: Numero de comensales inferior de lo permitido"
+			);
 			return false;
 		}
 	}
@@ -196,7 +208,7 @@ function nuevaComanda() {
 		bebidas: [],
 		platos: [],
 		notas: notas
-	}
+	};
 
 	fetch("https://restaurante.serverred.es/api/comandas", {
 		method: "POST",
@@ -207,19 +219,16 @@ function nuevaComanda() {
 		body: JSON.stringify(comanda)
 	})
 		.then(response => response.json())
-		.then(data => {
-
-		})
-		.catch((error) => {
+		.then(data => { })
+		.catch(error => {
 			console.log("Error => ", error);
-		})
+		});
 }
 
 function comandaBebidas(idBoto) {
 	var comBebidas = document.getElementById("comBebidas");
 	comBebidas.replaceChildren("");
-	
-	var validar = false;
+
 	infoBebidas.forEach(element => {
 		let tr = document.createElement("tr");
 
@@ -243,11 +252,27 @@ function comandaBebidas(idBoto) {
 		td2.appendChild(b);
 
 		//Añadir Cantidad
-		console.log(element);
-		if (idBoto == element._id) {
-            
-            validar = true;
-        } 
+		console.log(element)
+		var bebida = {
+			id: element._id,
+			nombre: element.nombre,
+			cantidad: 
+		}
+
+		let busqueda = element._id;
+		let index = infoBebidas.findIndex(
+			busca_bebidas => busca_bebidas._id === busqueda
+		);
+
+		if (index >= 0) {
+			alert("Producto ya registrado");
+		} else {
+			array_tenda.push(objetoProductos);
+			localStorage.setItem("productos", JSON.stringify(array_tenda));
+			alert("Se a registrado correctamente");
+		}
+
+		console.log(index);
 		//Añadir columnas
 		tr.appendChild(td1);
 		tr.appendChild(td2);
@@ -256,41 +281,13 @@ function comandaBebidas(idBoto) {
 	});
 }
 
-function añadirBebidaArray(elem) {
-    console.log(elem.id);
-    console.log(arrayBebidas);
-    console.log(arrayComanda.bebidas);
-
-    var validar = false;
-
-    arrayComanda.bebidas.forEach(element => {
-        if (elem.id == element._id) {
-            element.cantidad = element.cantidad+1;
-            validar = true;
-            reiniciarTable();
-        } 
-    })
-
-    if (validar == false) {
-        arrayBebidas.forEach(element => {
-            if (elem.id == element._id) {
-                var bebida = {
-                    "_id": element._id,
-                    "cantidad": 1,
-                    "estado": "Pendiente",
-                    "nombre": element.nombre,
-                    "precio": element.precio
-                }
-                arrayComanda.bebidas.push(bebida);
-                reiniciarTable();
-            }
-        })
-    }
-}
-
 function esborrarError() {
 	let formulari = document.forms[0];
-	for (let i = 0; i < formulari.elements.length - formulari.elements.length; i++) {
+	for (
+		let i = 0;
+		i < formulari.elements.length - formulari.elements.length;
+		i++
+	) {
 		formulari.elements[i].className = "form-control";
 	}
 	document.getElementById("missatgeError").innerHTML = "";
